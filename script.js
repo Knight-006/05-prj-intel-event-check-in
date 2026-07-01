@@ -6,6 +6,8 @@ const celebrationMessage = document.getElementById("celebration");
 const attendeeCountElement = document.getElementById("attendeeCount");
 const progressBar = document.getElementById("progressBar");
 const attendeeList = document.getElementById("attendeeList");
+const confettiLayer = document.getElementById("confettiLayer");
+const resetButton = document.getElementById("resetBtn");
 
 const goal = 50;
 const teamIds = ["water", "zero", "power"];
@@ -14,6 +16,8 @@ const teamLabels = {
   zero: "Team Net Zero",
   power: "Team Renewables",
 };
+
+let goalReached = false;
 
 let attendanceData = {
   total: 0,
@@ -24,6 +28,18 @@ let attendanceData = {
   },
   attendees: [],
 };
+
+function getDefaultData() {
+  return {
+    total: 0,
+    teams: {
+      water: 0,
+      zero: 0,
+      power: 0,
+    },
+    attendees: [],
+  };
+}
 
 function getSavedData() {
   const savedData = localStorage.getItem("eventCheckInData");
@@ -41,16 +57,44 @@ function saveData() {
   localStorage.setItem("eventCheckInData", JSON.stringify(attendanceData));
 }
 
+function createConfetti() {
+  const colors = ["#5ea4ff", "#dbe9ff", "#0f4ca0", "#2d8cff", "#cfe1ff"];
+
+  for (let i = 0; i < 28; i = i + 1) {
+    const piece = document.createElement("span");
+    piece.className = "confetti-piece";
+    piece.style.left = Math.random() * 100 + "%";
+    piece.style.backgroundColor = colors[i % colors.length];
+    piece.style.width = Math.random() * 10 + 6 + "px";
+    piece.style.height = Math.random() * 12 + 8 + "px";
+    piece.style.setProperty("--drift", Math.random() * 220 - 110 + "px");
+    piece.style.animationDelay = Math.random() * 0.2 + "s";
+    confettiLayer.appendChild(piece);
+
+    setTimeout(function () {
+      if (piece.parentNode) {
+        piece.parentNode.removeChild(piece);
+      }
+    }, 2400);
+  }
+}
+
 function updateProgress() {
   const percent = Math.min((attendanceData.total / goal) * 100, 100);
   progressBar.style.width = percent + "%";
   attendeeCountElement.textContent = attendanceData.total;
 
   if (attendanceData.total >= goal) {
+    if (!goalReached) {
+      goalReached = true;
+      createConfetti();
+    }
+
     const winningTeam = getWinningTeam();
     celebrationMessage.textContent = `Goal reached! ${winningTeam} is leading the celebration!`;
     celebrationMessage.classList.add("show");
   } else {
+    goalReached = false;
     celebrationMessage.classList.remove("show");
   }
 }
@@ -108,6 +152,18 @@ function showGreeting(name, teamLabel) {
     "Welcome, " + name + "! You are checked in for " + teamLabel + ".";
 }
 
+function resetAttendance() {
+  attendanceData = getDefaultData();
+  goalReached = false;
+  localStorage.removeItem("eventCheckInData");
+  updateTeamCounts();
+  updateProgress();
+  renderAttendeeList();
+  greetingMessage.style.display = "none";
+  greetingMessage.textContent = "";
+  celebrationMessage.classList.remove("show");
+}
+
 function handleCheckIn(event) {
   event.preventDefault();
 
@@ -137,11 +193,9 @@ function handleCheckIn(event) {
 }
 
 function initializeApp() {
-  getSavedData();
-  updateTeamCounts();
-  updateProgress();
-  renderAttendeeList();
+  resetAttendance();
 }
 
 form.addEventListener("submit", handleCheckIn);
+resetButton.addEventListener("click", resetAttendance);
 initializeApp();
