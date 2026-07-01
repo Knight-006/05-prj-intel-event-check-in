@@ -7,8 +7,15 @@
 
 body {
   font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-  background-color: #f5f5f5;
-  color: #333;
+  background:
+    radial-gradient(circle at top, rgba(94, 164, 255, 0.16), transparent 30%),
+    radial-gradient(
+      circle at bottom right,
+      rgba(13, 102, 193, 0.2),
+      transparent 20%
+    ),
+    linear-gradient(180deg, #071a3d 0%, #0b2b68 55%, #0f3a82 100%);
+  color: #f5f8ff;
   line-height: 1.6;
   min-height: 100vh;
 }
@@ -18,18 +25,19 @@ body {
   display: block;
   text-align: left;
   margin-bottom: 15px;
-  color: #475569;
+  color: #dbe9ff;
   padding-left: 5px;
   font-weight: 500;
 }
 
 /* Hero Section */
 .hero {
-  background: linear-gradient(
+  background:
+    linear-gradient(
       135deg,
-      rgba(0, 153, 219, 0.9) 0%,
-      rgba(0, 104, 181, 0.9) 50%,
-      rgba(0, 60, 116, 0.9) 100%
+      rgba(15, 76, 160, 0.95) 0%,
+      rgba(11, 43, 104, 0.95) 45%,
+      rgba(7, 26, 61, 0.95) 100%
     ),
     url("img/bg.jpg");
   background-size: cover;
@@ -65,7 +73,7 @@ body {
   width: 100px;
   height: 3px;
   margin: 26px auto;
-  background-color: #00c7fd;
+  background-color: #5ea4ff;
 }
 
 .hero p {
@@ -81,10 +89,12 @@ body {
   width: 90%;
   margin: 0 auto 20px;
   padding: 26px;
-  background: white;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 16px;
-  box-shadow: 0 5px 24px rgba(0, 60, 116, 0.07);
+  box-shadow: 0 20px 70px rgba(8, 17, 40, 0.25);
   text-align: center;
+  backdrop-filter: blur(12px);
 }
 
 /* Check-in form */
@@ -92,7 +102,8 @@ body {
   width: 100%;
   margin: 0 auto;
   padding: 30px;
-  background-color: #f8fafc;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   text-align: center;
 }
@@ -107,24 +118,24 @@ body {
 input {
   flex: 1;
   padding: 16px 20px;
-  border: 2px solid rgba(0, 0, 0, 0.08);
+  border: 2px solid rgba(255, 255, 255, 0.18);
   border-radius: 12px;
   font-size: 17px;
   font-weight: 500;
-  background: white;
-  color: #2c3e50;
+  background: rgba(255, 255, 255, 0.9);
+  color: #071a3d;
   transition: all 0.3s ease;
   outline: none;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
 }
 
 input:focus {
-  border-color: #0071c5;
-  box-shadow: 0 0 0 4px rgba(0, 113, 197, 0.15);
+  border-color: #5ea4ff;
+  box-shadow: 0 0 0 4px rgba(94, 164, 255, 0.2);
 }
 
 button {
-  background-color: #0071c5;
+  background-color: #0f4ca0;
   color: white;
   border: none;
   border-radius: 12px;
@@ -142,9 +153,9 @@ button {
 }
 
 button:hover {
-  background-color: #005a9e;
+  background-color: #1b63c6;
   transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(0, 113, 197, 0.3);
+  box-shadow: 0 6px 15px rgba(15, 76, 160, 0.28);
 }
 
 #checkInBtn {
@@ -205,14 +216,14 @@ button .fas {
 }
 
 .attendance-header i {
-  color: #0071c5;
+  color: #5ea4ff;
   font-size: 20px;
   margin-right: 4px;
 }
 
 /* Max attendees text */
 .attendance-header span:last-child {
-  color: #64748b;
+  color: #cfe1ff;
   font-size: 17px;
 }
 
@@ -231,8 +242,8 @@ button .fas {
 .progress-bar {
   width: 0%;
   height: 100%;
-  background-color: #0071c5;
-  background-image: linear-gradient(90deg, #0071c5, #00aeef);
+  background-color: #5ea4ff;
+  background-image: linear-gradient(90deg, #5ea4ff, #2d8cff);
   border-radius: 10px;
   transition: width 0.6s ease;
 }
@@ -248,14 +259,74 @@ button .fas {
   font-size: 18px;
   padding: 16px 20px;
   border-radius: 8px;
-  color: #333;
+  color: #f5f8ff;
   margin-bottom: 15px;
   display: none;
 }
 
 .success-message {
-  background-color: #e8f4fc;
-  color: #003c71;
+  background-color: rgba(94, 164, 255, 0.16);
+  color: #dbe9ff;
+}
+
+.celebration-message {
+  display: none;
+  font-weight: 700;
+  font-size: 18px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.14);
+  color: #f5f8ff;
+  margin-bottom: 15px;
+}
+
+.celebration-message.show {
+  display: block;
+}
+
+.attendee-list-section {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 2px solid #f1f5f9;
+}
+
+.attendee-list-section h4 {
+  color: #64748b;
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+.attendee-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.attendee-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+
+.attendee-name {
+  font-weight: 600;
+  color: #f5f8ff;
+}
+
+.attendee-team {
+  color: #cfe1ff;
+  font-size: 14px;
+}
+
+.empty-state {
+  color: #cfe1ff;
+  font-size: 15px;
+  padding: 8px 0;
 }
 
 /* Counter */
@@ -270,17 +341,17 @@ button .fas {
 .footer {
   text-align: center;
   padding: 40px 20px;
-  color: #94a3b8;
+  color: #cfe1ff;
   font-size: 14px;
 }
 
 .footer-link {
-  color: #64748b;
+  color: #dbe9ff;
   text-decoration: none;
 }
 
 .footer-link:hover {
-  color: #0071c5;
+  color: #5ea4ff;
   text-decoration: underline;
 }
 
@@ -294,12 +365,12 @@ button .fas {
 
 select {
   padding: 16px;
-  border: 2px solid rgba(0, 0, 0, 0.08);
+  border: 2px solid rgba(255, 255, 255, 0.18);
   border-radius: 12px;
   font-size: 17px;
   font-weight: 500;
-  background: white;
-  color: #2c3e50;
+  background: rgba(255, 255, 255, 0.9);
+  color: #071a3d;
   cursor: pointer;
   min-width: 140px;
 }
@@ -312,7 +383,7 @@ select {
 }
 
 .team-stats h3 {
-  color: #64748b;
+  color: #dbe9ff;
   font-size: 16px;
   margin-bottom: 20px;
 }
@@ -333,19 +404,19 @@ select {
 
 /* Team card colors */
 .team-card.water {
-  background-color: #e8f7fc;
+  background: rgba(94, 164, 255, 0.16);
 }
 .team-card.zero {
-  background-color: #ecfdf3;
+  background: rgba(207, 225, 255, 0.16);
 }
 .team-card.power {
-  background-color: #fff7ed;
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .team-name {
   font-size: 15px;
   font-weight: 500;
-  color: #475569;
+  color: #f5f8ff;
 }
 
 /* Mobile responsive */
